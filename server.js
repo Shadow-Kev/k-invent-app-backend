@@ -11,6 +11,22 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const app = express();
 
+app.use((_req, res, next) => {
+  // Website you wish to allow to connect
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type,Authorization,Accept"
+  );
+  next();
+});
+
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
@@ -18,7 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://kinvent-app.vercel.app"],
+    origin: ["http://localhost:3000", "https://kinvent-app.vercel.app/"],
     credentials: true,
   })
 );
